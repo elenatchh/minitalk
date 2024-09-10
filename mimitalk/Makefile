@@ -6,7 +6,7 @@
 #    By: elefonta <elefonta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/09 10:05:09 by elefonta          #+#    #+#              #
-#    Updated: 2024/09/09 11:34:20 by elefonta         ###   ########.fr        #
+#    Updated: 2024/09/10 14:02:30 by elefonta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME_server = server
 NAME_printf = printf/libftprintf.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 MINITALK = minitalk.h
 

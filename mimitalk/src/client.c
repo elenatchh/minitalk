@@ -6,7 +6,7 @@
 /*   By: elefonta <elefonta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:18:40 by elefonta          #+#    #+#             */
-/*   Updated: 2024/09/09 14:59:53 by elefonta         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:01:51 by elefonta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,30 @@ int	ft_atoi(const char *str)
 	return (nb * neg);
 }
 
-bool	true_pid(char *PID)
+void	send_binary(char caract, int pid)
 {
 	int	i;
 
 	i = 0;
-	while (PID[i])
+	while (i < 8)
 	{
-		if (PID[i] < '0' || PID[i] > '9')
+		if ((caract & (1 << i)))
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		usleep(100);
+		i++;
+	}
+}
+
+bool	true_pid(char *pid)
+{
+	int	i;
+
+	i = 0;
+	while (pid[i])
+	{
+		if (pid[i] < '0' || pid[i] > '9')
 			return (false);
 		i++;
 	}
@@ -56,15 +72,19 @@ bool	true_pid(char *PID)
 
 int	main(int argc, char **argv)
 {
-	int	PID; 
-	
-	
-	if (argc != 2)
+	int	pid;
+	int	i;
+
+	i = 0;
+	if (argc != 3)
 		return (ft_printf("nombre mauvais d'arguments"), 0);
 	if (true_pid(argv[1]) == false)
-		return (ft_printf("PID mal ecrit"), 0);
-	PID = ft_atoi(argv[1]);
-	kill(PID, SIGUSR1);
+		return (ft_printf("pid mal ecrit"), 0);
+	pid = ft_atoi(argv[1]);
+	while (argv[2][i])
+	{
+		send_binary(argv[2][i], pid);
+		i++;
+	}
 }
-
 
