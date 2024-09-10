@@ -6,11 +6,13 @@
 /*   By: elefonta <elefonta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:18:40 by elefonta          #+#    #+#             */
-/*   Updated: 2024/09/10 12:01:51 by elefonta         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:46:20 by elefonta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minitalk.h"
+
+int	g_signal;
 
 int	ft_atoi(const char *str)
 {
@@ -51,7 +53,11 @@ void	send_binary(char caract, int pid)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(100);
+		while (g_signal == 0)
+		{
+
+		}
+		g_signal = 0;
 		i++;
 	}
 }
@@ -70,12 +76,20 @@ bool	true_pid(char *pid)
 	return (true);
 }
 
+void	confirm_signal(int signal)
+{
+	if (signal == SIGUSR1)
+		g_signal = 1;
+}
+
 int	main(int argc, char **argv)
 {
 	int	pid;
 	int	i;
 
 	i = 0;
+	g_signal = 0;
+	signal(SIGUSR1, confirm_signal);
 	if (argc != 3)
 		return (ft_printf("nombre mauvais d'arguments"), 0);
 	if (true_pid(argv[1]) == false)
@@ -86,5 +100,7 @@ int	main(int argc, char **argv)
 		send_binary(argv[2][i], pid);
 		i++;
 	}
+	send_binary(0, pid);
+	kill(pid, SIGUSR2);
 }
 
