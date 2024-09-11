@@ -6,7 +6,7 @@
 /*   By: elefonta <elefonta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:18:40 by elefonta          #+#    #+#             */
-/*   Updated: 2024/09/10 15:46:20 by elefonta         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:19:16 by elefonta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,20 @@ void	send_binary(char caract, int pid)
 bool	true_pid(char *pid)
 {
 	int	i;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (pid[i])
 	{
+		if (pid[i] == '0')
+			count++;
 		if (pid[i] < '0' || pid[i] > '9')
 			return (false);
 		i++;
 	}
+	if (count == i)
+		return (false);
 	return (true);
 }
 
@@ -101,6 +107,5 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	send_binary(0, pid);
-	kill(pid, SIGUSR2);
 }
 

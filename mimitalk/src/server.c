@@ -6,7 +6,7 @@
 /*   By: elefonta <elefonta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 10:17:43 by elefonta          #+#    #+#             */
-/*   Updated: 2024/09/10 15:48:26 by elefonta         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:27:15 by elefonta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	receive_binary(int signal, siginfo_t *s, void *v)
 		final = ft_charjoin(final, caract);
 		i = 0;
 		caract = 0;
-		if (caract == 0)
+		if (caract == '\0')
 		{
 			ft_printf("%s", final);
 			free(final);
